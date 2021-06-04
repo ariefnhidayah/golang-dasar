@@ -10,7 +10,7 @@ func main() {
 	var getMinMax = func(numbers []int) (int, int) {
 		var min, max int
 
-		for index, number := range(numbers) {
+		for index, number := range numbers {
 			switch {
 			case index == 0:
 				max, min = number, number
@@ -24,7 +24,7 @@ func main() {
 		return min, max
 	}
 
-	var numbers = []int {2, 3, 0, 4, 3, 2, 0, 4, 2, 0, 3}
+	var numbers = []int{2, 3, 0, 4, 3, 2, 0, 4, 2, 0, 3}
 
 	var min, max = getMinMax(numbers)
 
@@ -34,9 +34,11 @@ func main() {
 
 	// Immediately-Invoked Function Expression (IIFE)
 	// Closure jenis ini dieksekusi langsung pada saat deklarasinya.
+	fmt.Println("=================================")
+	min = 3
 	var newNumbers = func(min int) []int {
 		var temp []int
-		for _, number := range(numbers) {
+		for _, number := range numbers {
 			if number < min {
 				continue
 			}
@@ -44,9 +46,38 @@ func main() {
 		}
 
 		return temp
-	}(3)
+	}(min)
 
 	fmt.Println("original number :", numbers)
-    fmt.Println("filtered number :", newNumbers)
-	
+	fmt.Println("filtered number :", newNumbers)
+
+	// Closure sebagai nilai kembalian
+	fmt.Println("=================================")
+
+	numbers = []int{2, 3, 0, 4, 3, 2, 0, 4, 2, 0, 3}
+	max = 3
+	var howMany, getNumbers = findMax(numbers, max)
+	var theNumbers = getNumbers()
+
+	fmt.Println("numbers\t:", numbers)
+	fmt.Printf("find \t: %d\n\n", max)
+
+	fmt.Println("found \t:", howMany) // 9
+	fmt.Println("value \t:", theNumbers)
+
+}
+
+// Closure sebagai nilai kembalian
+func findMax(numbers []int, max int) (int, func() []int) {
+	var temp []int
+
+	for _, number := range numbers {
+		if number <= max {
+			temp = append(temp, number)
+		}
+	}
+
+	return len(temp), func() []int {
+		return temp
+	}
 }
