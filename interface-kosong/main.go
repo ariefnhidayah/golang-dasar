@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import(
+	"fmt"
+	"strings"
+)
 
 func main() {
 
@@ -23,4 +26,26 @@ func main() {
 	}
 
 	fmt.Println(data["name"], data["umur"])
+
+	// casting variabel interface kosong
+	// Variabel bertipe interface{} bisa ditampilkan ke layar sebagai string dengan memanfaatkan fungsi print, seperti fmt.Println(). Tapi perlu diketahui bahwa nilai yang dimunculkan tersebut bukanlah nilai asli, melainkan bentuk string dari nilai aslinya.
+
+	secret = 2
+	// var number = secret * 10 // jika seperti ini akan error
+	var number = secret.(int) * 10
+	fmt.Println("Multiplied by 10: ", number)
+
+	secret = []string{"apple", "manggo", "banana"}
+	var gruits = strings.Join(secret.([]string), ", ")
+	fmt.Println(gruits, "is my favourite fruits")
+
+	// casting interface kosong ke object pointer
+	secret = &Person{Name: "Arief", Age: 20}
+	name := secret.(*Person).Name
+	fmt.Println(name)
+}
+
+type Person struct {
+	Name string
+	Age int
 }
